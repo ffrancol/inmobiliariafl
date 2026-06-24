@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inmobiliaria Franco Larrañaga</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:   #f5f0e8;
+      --cream:  #faf8f3;
+      --dark:   #0a0700f8;
+      --mid:    #c9a85c;
+      --muted:  #ca9866;
+      --gold:   #bb9646;
+      --gold-lt:#e8d19a;
+      --white:  #ffffff;
+      --radius: 4px;
+      --shadow: 0 8px 40px rgba(32, 26, 19, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 20px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .4s, backdrop-filter .4s, padding .3s;
+    }
+    nav.scrolled {
+      background: rgba(250,248,243,.92);
+      backdrop-filter: blur(12px);
+      padding: 14px 48px;
+      box-shadow: 0 1px 0 rgba(201,168,92,.2);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--white);
+      transition: color .3s;
+    }
+    nav.scrolled .nav-logo { color: var(--dark); }
+    .nav-logo-icon {
+      width: 40px; height: 40px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 600; color: var(--white);
+      flex-shrink: 0;
+    }
+    .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; letter-spacing: .03em; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,.85); text-decoration: none;
+      transition: color .2s;
+    }
+    nav.scrolled .nav-links a { color: var(--mid); }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: var(--white);
+      border: none; padding: 10px 22px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: .05em;
+      text-transform: uppercase; cursor: pointer;
+      border-radius: var(--radius); text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: #f5ba31; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); transition: background .3s;
+    }
+    nav.scrolled .hamburger span { background: var(--dark); }
+
+    /* ─── HERO ────────────────────────────────── */
+    #hero {
+      position: relative; height: 100vh; min-height: 600px;
+      display: flex; align-items: center; justify-content: flex-start;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=85&auto=format&fit=crop');
+      background-size: cover; background-position: center;
+      transform: scale(1.05);
+      animation: zoomOut 12s ease-out forwards;
+    }
+    @keyframes zoomOut { to { transform: scale(1); } }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(100deg, rgba(26,23,20,.72) 40%, rgba(26,23,20,.18) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 48px; max-width: 680px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,92,.2); border: 1px solid rgba(201,168,92,.5);
+      color: var(--gold-lt); font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+      animation: fadeUp .8s ease both;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 300; color: var(--white);
+      line-height: 1.05; letter-spacing: -.01em;
+      animation: fadeUp .8s .15s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-lt); }
+    .hero-sub {
+      margin-top: 24px; font-size: 16px; color: rgba(255,255,255,.72);
+      line-height: 1.7; font-weight: 300;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .hero-actions {
+      margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp .8s .45s ease both;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--white);
+      padding: 16px 36px; border-radius: var(--radius);
+      font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; font-weight: 500;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-primary:hover { background: #b8943e; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,92,.35); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,.5); color: var(--white);
+      padding: 16px 36px; border-radius: var(--radius);
+      font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; font-weight: 400;
+      transition: background .2s, border-color .2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.1); border-color: var(--white); }
+    .hero-stats {
+      position: absolute; bottom: 48px; left: 48px; right: 48px;
+      display: flex; gap: 40px; z-index: 2;
+      animation: fadeUp .8s .6s ease both;
+    }
+    .stat { border-left: 2px solid var(--gold); padding-left: 16px; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 300; color: var(--white); line-height: 1;
+    }
+    .stat-label { font-size: 11px; color: rgba(255,255,255,.55); letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SECTIONS SHARED ─────────────────────── */
+    section { padding: 100px 48px; }
+    .section-label {
+      font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 4vw, 52px); font-weight: 300;
+      color: var(--dark); line-height: 1.15;
+    }
+    .section-title em { font-style: italic; }
+    .divider { width: 48px; height: 2px; background: var(--gold); margin: 20px 0 0; }
+
+    /* ─── NOSOTROS ────────────────────────────── */
+    #nosotros { background: var(--cream); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center; margin-top: 56px;
+    }
+    .about-img-wrap { position: relative; }
+    .about-img-wrap img {
+      width: 100%; height: 480px; object-fit: cover;
+      border-radius: 2px;
+    }
+    .about-accent {
+      position: absolute; bottom: -24px; right: -24px;
+      width: 160px; height: 160px;
+      background: var(--gold); opacity: .15;
+      border-radius: 2px; z-index: -1;
+    }
+    .about-badge-img {
+      position: absolute;
+      top: 24px;
+      left: -24px;
+      background: #0a070091;
+      color: var(--white);
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .about-badge-img .n { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--gold); line-height: 1; }
+    .about-badge-img .t { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-top: 4px; }
+    .about-text p {
+      font-size: 16px; line-height: 1.8; color: #5a5048;
+      font-weight: 300; margin-bottom: 18px;
+    }
+    .horarios {
+      margin-top: 32px; background: var(--sand);
+      border-radius: var(--radius); padding: 24px 28px;
+      border-left: 3px solid var(--gold);
+    }
+    .horarios h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 600; margin-bottom: 14px; color: var(--dark);
+    }
+    .horario-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,.06);
+      font-size: 14px; color: var(--mid);
+    }
+    .horario-row:last-child { border-bottom: none; }
+    .horario-row span:last-child { font-weight: 500; color: var(--dark); }
+
+    /* ─── PROPIEDADES ─────────────────────────── */
+    #propiedades { background: var(--sand); }
+    .props-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .filter-bar {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 8px 18px; border-radius: 20px; border: 1px solid #d4ccc0;
+      background: transparent; font-size: 13px; color: var(--muted);
+      cursor: pointer; transition: all .2s; font-family: 'DM Sans', sans-serif;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--gold); border-color: var(--gold); color: var(--white);
+    }
+    .props-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+      align-items: start; /* ✅ FIX PRINCIPAL: cada tarjeta tiene altura independiente */
+    }
+    .card {
+      background: var(--white); border-radius: var(--radius);
+      overflow: visible; /* ✅ FIX: cambiado de hidden a visible para no cortar el contenido expandido */
+      box-shadow: 0 2px 16px rgb(0, 0, 0);
+      transition: transform .3s, box-shadow .3s;
+    }
+    /* El card-img sí necesita overflow:hidden para recortar la imagen */
+    .card-img {
+      position: relative; overflow: hidden; height: 220px;
+      border-radius: var(--radius) var(--radius) 0 0; /* ✅ FIX: bordes redondeados solo arriba */
+    }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .card:hover .card-img img { transform: scale(1.05); }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(26,23,20,.14); }
+    .card-tag {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--gold); color: var(--white);
+      font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 2px;
+    }
+    .card-tag.destacada { background: var(--dark); }
+    .card-body { padding: 24px; }
+    .card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 400; color: var(--gold);
+    }
+    .card-price sup { font-size: 14px; }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 600; color: var(--dark);
+      margin: 8px 0 6px; line-height: 1.3;
+    }
+    .card-location {
+      font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 5px;
+    }
+    .card-location::before { content: '📍'; font-size: 11px; }
+    .card-desc { font-size: 14px; color: #6a6058; line-height: 1.65; margin-top: 12px; font-weight: 300; }
+    .card-features {
+      display: flex; gap: 16px; margin-top: 16px;
+      padding-top: 16px; border-top: 1px solid #0000001a;
+      flex-wrap: wrap;
+    }
+    .feat {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--muted);
+    }
+    .feat-icon { font-size: 14px; }
+    .card-footer {
+      padding: 0 24px 24px;
+    }
+    .btn-card {
+      display: block; text-align: center;
+      background: var(--dark); color: var(--white);
+      padding: 13px; border-radius: var(--radius);
+      font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; transition: background .2s;
+    }
+    .btn-card:hover { background: #2d2520; }
+
+    /* ─── LIGHTBOX ────────────────────────────── */
+    .gal-hero { cursor: pointer; position: relative; overflow: hidden; border-radius: inherit; transition: .4s cubic-bezier(.23,1,.32,1); transform-style: preserve-3d; }
+    .gal-hero:hover { transform: scale(1.03) rotateX(4deg) rotateY(-4deg); box-shadow: 0 20px 40px #0005; }
+    .gal-hero::after { content: '🔍 ver fotos'; position: absolute; bottom: 10px; right: 10px; background: #000a; color: #fff; font-size: 11px; letter-spacing: .15em; padding: 5px 10px; border-radius: 20px; pointer-events: none; }
+    .lb { display: none; position: fixed; inset: 0; background: rgba(31,104,117,.205); backdrop-filter: blur(16px); z-index: 9999; align-items: center; justify-content: center; flex-direction: column; }
+    .lb.on { display: flex; animation: lbin .3s ease; }
+    @keyframes lbin { from { opacity: 0; transform: scale(.95); } to { opacity: 1; transform: scale(1); } }
+    .lb-stage { perspective: 1200px; width: min(80vw,520px); height: min(65vh,380px); }
+    .lb-card { width: 100%; height: 100%; border-radius: 14px; overflow: hidden; transition: transform .5s cubic-bezier(.23,1,.32,1); box-shadow: 0 40px 80px #000a,0 0 0 1px #fff2; position: relative; }
+    .lb-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg,#fff1 0%,transparent 40%); pointer-events: none; }
+    .lb-card img { width: 100%; height: 100%; object-fit: cover; }
+    .lb-cap { margin-top: 1rem; color: #fff8; font-size: 13px; letter-spacing: .1em; text-align: center; height: 20px; }
+    .lb-nav { display: flex; gap: 12px; margin-top: 14px; }
+    .lb-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(3,238,255,.26); background: rgba(4,236,186,.144); color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: .2s; }
+    .lb-btn:hover { background: rgba(0,129,168,.133); transform: scale(1.1); }
+    .lb-close { position: fixed; top: 16px; right: 20px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid #fff3; background: #fff1; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: .2s; z-index: 10000; }
+    .lb-close:hover { transform: rotate(90deg); }
+    .lb-dots { display: flex; gap: 6px; margin-top: 12px; }
+    .lb-dot { width: 5px; height: 5px; border-radius: 50%; background: #fff3; cursor: pointer; transition: .2s; }
+    .lb-dot.a { background: rgba(4,236,186,.185); transform: scale(2.0); }
+    .lb-count { position: absolute; top: 12px; right: 14px; background: rgba(4,236,186,.116); color: #fff9; font-size: 11px; padding: 3px 9px; border-radius: 20px; z-index: 2; }
+
+    /* ─── CONTACTO ────────────────────────────── */
+    #contacto { background: var(--dark); text-align: center; }
+    #contacto .section-label { color: var(--gold-lt); }
+    #contacto .section-title { color: var(--white); }
+    #contacto .divider { margin: 20px auto 0; }
+    .contact-text { font-size: 17px; color: rgba(255,255,255,.6); font-weight: 300; max-width: 520px; margin: 24px auto 0; line-height: 1.75; }
+    .btn-whatsapp { display: inline-flex; align-items: center; gap: 14px; background: #2f6b47; color: var(--white); padding: 18px 44px; border-radius: var(--radius); font-size: 15px; letter-spacing: .05em; text-transform: uppercase; text-decoration: none; font-weight: 500; margin-top: 44px; transition: background .2s, transform .15s, box-shadow .2s; }
+    .btn-whatsapp:hover { background: #1ebe59; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,211,102,.3); }
+    .btn-whatsapp svg { width: 24px; height: 24px; fill: rgb(255,255,255); }
+    .contact-info { display: flex; justify-content: center; gap: 48px; margin-top: 56px; flex-wrap: wrap; }
+    .cinfo { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .cinfo-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.35); }
+    .cinfo-val { font-size: 15px; color: rgba(219,189,19,.85); }
+
+    /* ─── FOOTER ──────────────────────────────── */
+    footer { background: #120f0d; padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: rgba(255,255,255,.5); font-weight: 300; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,.3); }
+    .footer-gold { color: var(--gold); }
+
+    /* ─── FLOATING WA ─────────────────────────── */
+    .wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 56px; height: 56px; border-radius: 50%; background: #25D366; display: grid; place-items: center; box-shadow: 0 4px 20px rgba(37,211,102,.45); text-decoration: none; animation: pulse 2s infinite; }
+    .wa-float svg { width: 28px; height: 28px; fill: white; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.45); } 50% { box-shadow: 0 4px 36px rgba(37,211,102,.7); } }
+
+    /* ─── SCROLL REVEAL ───────────────────────── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 72px 24px; }
+      .hero-content { padding: 0 24px; }
+      .hero-stats { left: 24px; right: 24px; gap: 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-badge-img { left: 16px; }
+      .about-accent { display: none; }
+      footer { padding: 24px; flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 560px) {
+      .hero-stats { display: none; }
+      .btn-primary, .btn-outline { padding: 14px 24px; font-size: 13px; }
+      .props-header { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ─── MOBILE NAV MENU ─────────────────────── */
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 90; background: var(--dark); flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--white); text-decoration: none; font-weight: 300; letter-spacing: .02em; transition: color .2s; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 24px; right: 28px; background: none; border: none; color: var(--white); font-size: 28px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ───────────────────────────────────── -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">
+    <div class="nav-logo-icon">FL</div>
+    <span class="nav-logo-text">Franco Larrañaga</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#propiedades">Propiedades</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/56983997096" target="_blank">Contactar</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ────────────────────────────── -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#nosotros"    onclick="closeMobile()">Nosotros</a>
+  <a href="#propiedades" onclick="closeMobile()">Propiedades</a>
+  <a href="#contacto"    onclick="closeMobile()">Contacto</a>
+  <a href="https://wa.me/56983997096" target="_blank" style="color:var(--gold);">WhatsApp</a>
+</div>
+
+<!-- ── HERO ───────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Inmobiliaria de confianza</div>
+    <h1 class="hero-title">Tu hogar ideal,<br><em>hecho realidad</em></h1>
+    <p class="hero-sub">
+      Propiedades exclusivas seleccionadas para quienes valoran la calidad,
+      la ubicación y el detalle. Más de 10 años conectando familias
+      con el hogar perfecto.
+    </p>
+    <div class="hero-actions">
+      <a href="#propiedades" class="btn-primary">
+        <span>Ver propiedades</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#nosotros" class="btn-outline">Conoce la empresa</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">+150</div><div class="stat-label">Propiedades vendidas</div></div>
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Años de experiencia</div></div>
+    <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Clientes satisfechos</div></div>
+  </div>
+</section>
+
+<!-- ── NOSOTROS ───────────────────────────────── -->
+<section id="nosotros">
+  <div class="reveal">
+    <div class="section-label">Quiénes somos</div>
+    <h2 class="section-title">Inmobiliaria<br><em>Franco Larrañaga</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <img src="https://i.ibb.co/VFkncqd/1780488097089.png" alt="Propiedad moderna" style="width:100%;height:auto;max-width:100%;display:block;" />
+      <div class="about-accent"></div>
+      <div class="about-badge-img">
+        <div class="n">10+</div>
+        <div class="t">Años en el mercado</div>
+      </div>
+    </div>
+    <div class="about-text reveal" style="transition-delay:.15s">
+      <p>Somos una empresa familiar fundada con la misión de hacer que el proceso de compra y venta de propiedades sea transparente, confiable y memorable. Nuestro equipo conoce a fondo el mercado inmobiliario local y trabaja incansablemente para encontrar la propiedad que más se ajusta a tus necesidades.</p>
+      <p>Con más de una década en el rubro, hemos acompañado a cientos de familias en uno de los pasos más importantes de su vida para encontrar el hogar perfecto. Cada propiedad que presentamos ha sido visitada, evaluada y seleccionada con criterio.</p>
+      <p>En Inmobiliaria Franco Larrañaga construimos relaciones basadas en la confianza y el compromiso. Te asesoramos en cada etapa del proceso con un equipo de expertos para garantizarte un servicio personalizado, seguro y eficiente.</p>
+      <div class="horarios">
+        <h4>🕐 Horarios de atención</h4>
+        <div class="horario-row"><span>Lunes a Viernes</span><span>09:00 – 18:00 hrs</span></div>
+        <div class="horario-row"><span>Sábado</span><span>10:00 – 14:00 hrs</span></div>
+        <div class="horario-row"><span>Domingo</span><span>Cerrado</span></div>
+        <div class="horario-row"><span>WhatsApp</span><span>Lunes a Sábado</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROPIEDADES ────────────────────────────── -->
+<section id="propiedades">
+  <div class="props-header reveal">
+    <div>
+      <div class="section-label">Catálogo actual</div>
+      <h2 class="section-title">Nuestras <em>propiedades</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProps('todos', this)">Todos</button>
+      <button class="filter-btn" onclick="filterProps('casa', this)">Casas</button>
+      <button class="filter-btn" onclick="filterProps('departamento', this)">Depto.</button>
+      <button class="filter-btn" onclick="filterProps('terreno', this)">Terrenos</button>
+    </div>
+  </div>
+
+  <div class="props-grid" id="propsGrid">
+
+    <!-- PROP 1 -->
+    <div class="card reveal" data-tipo="casa">
+      <div class="card-img">
+        <div class="gal-hero" id="gal-hero2">
+          <img src="https://i.ibb.co/VY0vX68j/ima1.jpg" alt="Casa Tradicional" loading="lazy" />
+        </div>
+        <span class="card-tag destacada" style="background-color:rgba(0,255,0,0.377);">Disponible</span>
+      </div>
+      <div class="card-body">
+        <div class="card-price"><sup>UF </sup>5.410</div>
+        <div class="card-title">Casa tradicional en excelente barrio</div>
+        <div class="card-location">Terrazas de Peñuelas - Coquimbo</div>
+        <p class="card-desc">
+          Hermosa casa amoblada y ampliada, de aproximadamente 250 m² construidos en terreno de 150 m², ubicada en el consolidado sector residencial Villa Viña del Mar, Terrazas de Peñuelas. 🏡
+          <span id="puntos2">...</span>
+          <span id="mas-texto2" style="display:none;">
+            <br><br>🔹 Pieza adicional (ideal como oficina o dormitorio de apoyo)
+            <br>🔹 Living y comedor independientes
+            <br>🔹 Cocina ampliada con despensa
+            <br>🔹 Bodega de gran tamaño
+            <br>🔹 Terraza
+            <br>🔹 Walk-in closet
+            <br>🔹 Salamandra
+            <br>🔹 Aire acondicionado
+            <br><br>Cuenta además con cortinas de seguridad en ventanas frontales con control remoto, cámara de seguridad y estacionamiento techado.
+            <br><br>El patio ofrece un entorno agradable, con dos árboles frutales (limón y durazno), ideal para disfrutar en familia 🌿
+            <br><br>Excelente conectividad, cercana a Ruta 5 Norte y al sector La Cantera, donde próximamente se emplazará el nuevo Hospital de Coquimbo 🏥. A pasos de restaurantes, farmacias, clínicas, veterinarias, gimnasios, supermercados y comercio en general, además de canchas de pádel y tenis 🎾
+          </span>
+          <button onclick="toggleTexto('2')" id="btn-ver-mas2" style="background:none;border:none;color:#0081a8;padding:0;font-family:inherit;font-size:inherit;cursor:pointer;margin-left:5px;font-weight:bold;display:inline-block;">Ver más</button>
+        </p>
+        <div class="card-features">
+          <div class="feat"><span class="feat-icon">🛏</span> 4 hab.</div>
+          <div class="feat"><span class="feat-icon">🚿</span> 2 baños</div>
+          <div class="feat"><span class="feat-icon">📐</span> 250 m²</div>
+          <div class="feat"><span class="feat-icon">🚗</span> 2 estac.</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://wa.me/56983997096?text=Hola!%20Me%20interesa%20la%20casa%20en%20Las%20Terrazas%20de%20Peñuelas%20(UF5.410)" class="btn-card" target="_blank">Consultar ahora</a>
+      </div>
+    </div>
+
+    <!-- PROP 2 -->
+    <div class="card reveal" data-tipo="casa">
+      <div class="card-img">
+        <div class="gal-hero" id="gal-hero5">
+          <img src="https://i.ibb.co/XfGG4kgh/1.jpg" alt="Casa Tradicional" loading="lazy" />
+        </div>
+        <span class="card-tag" style="background-color:#dc35469a;color:white;">VENDIDO</span>
+      </div>
+      <div class="card-body">
+        <div class="card-price"><sup>UF </sup>3.200</div>
+        <div class="card-title">Hermosa casa Tradicional</div>
+        <div class="card-location">Parque Nacional Ralco - Bosque San Carlos</div>
+        <p class="card-desc">
+          Acogedora casa de aproximadamente 60 m² construidos en un terreno de 120 m², ubicada en el sector Bosque San Carlos, en un entorno residencial tranquilo y seguro. 🏡
+          <span id="puntos5">...</span>
+          <span id="mas-texto5" style="display:none;">
+            <br><br>🔹 Living.
+            <br>🔹 Cocina.
+            <br>🔹 Ante jardín.
+            <br>🔹 Estacionamiento.
+            <br><br><strong>📍 Excelente ubicación:</strong>
+            <br>A solo 5 cuadras de la Ruta 43 y del Barrio Industrial, con muy buena conectividad. La propiedad se encuentra en una calle sin salida, la cual será cerrada próximamente por acuerdo de los cuatro vecinos del pasaje, otorgando mayor seguridad y tranquilidad.
+            <br><br>Cercana a Supermercados, Cesfam, Carabineros y comercio en general. Locomoción colectiva a media cuadra 🚍
+          </span>
+          <button onclick="toggleTexto('5')" id="btn-ver-mas5" style="background:none;border:none;color:#0081a8;padding:0;font-family:inherit;font-size:inherit;cursor:pointer;margin-left:5px;font-weight:bold;display:inline-block;">Ver más</button>
+        </p>
+        <div class="card-features">
+          <div class="feat"><span class="feat-icon">🛏</span> 2 hab.</div>
+          <div class="feat"><span class="feat-icon">🚿</span> 1 baño</div>
+          <div class="feat"><span class="feat-icon">📐</span> 120 m²</div>
+          <div class="feat"><span class="feat-icon">🚗</span> 1 estac.</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://wa.me/56983997096?text=Hola!%20Me%20interesa%20la%20casa%20en%20El%20Bosque%20San%20Carlos%20(UF3.200)" class="btn-card" target="_blank">Consultar Ahora</a>
+      </div>
+    </div>
+
+    <!-- PROP 3 -->
+    <div class="card reveal" data-tipo="departamento" style="transition-delay:.1s">
+      <div class="card-img">
+        <div class="gal-hero" id="gal-hero1">
+          <img src="https://i.ibb.co/qLdFv2Gp/im-1.jpg" alt="Departamento" loading="lazy" />
+        </div>
+        <span class="card-tag" style="background-color:rgba(255,0,0,0.377);">VENDIDO</span>
+      </div>
+      <div class="card-body">
+        <div class="card-price"><sup>UF </sup>2.600</div>
+        <div class="card-title">Departamento luminoso con hermosa vista</div>
+        <div class="card-location">Av. del Mar con Av Las Higueras - La Serena</div>
+        <p class="card-desc">
+          Moderno departamento con vistas despejadas, cocina americana integrada, balcón con vista a areas verdes y ciudad de fondo 🌆
+          <span id="puntos1">...</span>
+          <span id="mas-texto1" style="display:none;">
+            <br><br>Acogedor departamento en un tranquilo condominio de seis pisos con ascensor, ubicado en el sexto y último nivel, lo que brinda mayor privacidad y una vista privilegiada 🌞
+            <br><br>Situado a solo una cuadra de la Avenida del Mar, entre Cuatro Esquinas y El Faro, delimitado por las calles Las Higueras y Avenida Pacífico ⛱
+            <br><br>La propiedad cuenta con 2 dormitorios y 1 baño, un amplio balcón en el living-comedor ideal para disfrutar de la vista y la brisa marina, además de un balcón adicional en uno de los dormitorios 😇
+            <br><br>Incluye estacionamiento privado, una pequeña bodega en el mismo piso del departamento, y una excelente orientación noreste, que permite disfrutar de una hermosa vista al centro de La Serena y una vista parcial al mar 👌
+            <br><br>El condominio ofrece excelentes áreas comunes: una gran y hermosa piscina para adultos y niños, quinchos equipados para asados, áreas verdes con juegos infantiles, lavandería y seguridad las 24 horas del día 💂
+            <br><br>Ubicado en un entorno residencial muy tranquilo, lejos del ruido vehicular y del bullicio urbano, a solo cinco minutos en auto de la Ruta 5 Norte, el mall de La Serena, Sodimac Homecenter, supermercado Líder, automotoras y tiendas como Casa Ideas 📍
+            <br><br>También se encuentra a minutos de importantes centros de educación superior como Universidad Central, INACAP, Santo Tomás, Pedro de Valdivia y El Alba 👩‍🎓
+            <br><br>Ideal para quienes buscan vivir o invertir en una zona costera con excelente conectividad, entorno seguro y espacios de recreación para toda la familia 🧘‍♀️
+          </span>
+          <button onclick="toggleTexto('1')" id="btn-ver-mas1" style="background:none;border:none;color:#0081a8;padding:0;font-family:inherit;font-size:inherit;cursor:pointer;margin-left:5px;font-weight:bold;display:inline-block;">Ver más</button>
+        </p>
+        <div class="card-features">
+          <div class="feat"><span class="feat-icon">🛏</span> 2 hab.</div>
+          <div class="feat"><span class="feat-icon">🚿</span> 1 baño</div>
+          <div class="feat"><span class="feat-icon">📐</span> 48 m²</div>
+          <div class="feat"><span class="feat-icon">🚗</span> 1 estac.</div>
+          <div class="feat"><span class="feat-icon">🚪</span> 1 bodega 1x1.5m²</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://wa.me/56983997096?text=Hola!%20Me%20interesa%20el%20Departamento%20de%20Av.%20Las%20Higueras(UF2.600)" class="btn-card" target="_blank">Consultar ahora</a>
+      </div>
+    </div>
+
+    <!-- PROP 4 -->
+    <div class="card reveal" data-tipo="casa" style="transition-delay:.2s">
+      <div class="card-img">
+        <div class="gal-hero" id="gal-hero9">
+          <img src="https://i.ibb.co/LX35mJH5/fachada3.jpg" alt="Casa con jardín" loading="lazy" />
+        </div>
+        <span class="card-tag destacada" style="background-color:rgba(0,255,0,0.377);">Disponible</span>
+      </div>
+      <div class="card-body">
+        <div class="card-price"><sup>UF </sup>2.400</div>
+        <div class="card-title">Acogedora casa esquina en sector consolidado de Coquimbo</div>
+        <div class="card-location">Villa El Sauce - Miramar, Coquimbo</div>
+        <p class="card-desc">
+          Casa de material solido en Villa El Sauce con una superficie de 77 m² de terreno y 49 m² construidos. Excelente propiedad de dos pisos ubicada en un sector consolidado de Coquimbo 📍
+          <span id="puntos9">...</span>
+          <span id="mas-texto9" style="display:none;">
+            Una opción ideal para familias o inversión, gracias a su gran conectividad y cercanía a servicios 🚍
+            <br><br>✨ Primer Piso:
+            <br>🔹 Living comedor, cocina funcional y un baño completo.
+            <br><br>✨ Segundo Piso:
+            <br>🔹 2 amplios dormitorios con excelente capacidad.
+            <br><br>✨ Exterior:
+            <br>🔹 Entrada de auto privada con acceso por pasaje, lo que brinda mayor tranquilidad y seguridad.
+            <br><br>✨ Ubicación Estratégica:
+            <br>🔹 La propiedad destaca por su excelente conectividad, con locomoción colectiva a pasos y rápido acceso a todo lo necesario para el día a día.
+            <br>🔹 Cercana a colegios de la zona.
+            <br>🔹 A minutos de supermercados y comercios.
+            <br>🔹 Barrio residencial consolidado y seguro.
+          </span>
+          <button onclick="toggleTexto('9')" id="btn-ver-mas9" style="background:none;border:none;color:#0081a8;padding:0;font-family:inherit;font-size:inherit;cursor:pointer;margin-left:5px;font-weight:bold;display:inline-block;">Ver más</button>
+        </p>
+        <div class="card-features">
+          <div class="feat"><span class="feat-icon">🛏</span> 2 hab.</div>
+          <div class="feat"><span class="feat-icon">🚿</span> 1 baño</div>
+          <div class="feat"><span class="feat-icon">📐</span> 77 m²</div>
+          <div class="feat"><span class="feat-icon">🚗</span> 1 estac.</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://wa.me/56961770650?text=Hola!%20Me%20interesa%20la%20casa%20en%20Villa%20el%20Sauce%20(UF2.400)" class="btn-card" target="_blank">Consultar ahora</a>
+      </div>
+    </div>
+
+    <!-- PROP 5 -->
+    <div class="card reveal" data-tipo="casa" style="transition-delay:.2s">
+      <div class="card-img">
+        <div class="gal-hero" id="gal-hero3">
+          <img src="https://i.ibb.co/hxvhnj8N/fachada.jpg" width="300%" height="300%" alt="Casa con Terreno" loading="lazy" />
+        </div>
+        <span class="card-tag" style="background-color:rgba(0,255,0,0.377);">Disponible</span>
+      </div>
+      <div class="card-body">
+        <div class="card-price"><sup>UF </sup>8.740</div>
+        <div class="card-title">Propiedad en condominio privado</div>
+        <div class="card-location">La Varilla - La Serena</div>
+        <p class="card-desc">
+          🌳 Parcela de 5.000 m² en exclusivo condominio – Sector La Varilla, La Serena 📍 Hermosa propiedad con una privilegiada vista al poniente, ubicada en condominio cerrado con guardias las 24 horas, a tan solo 5 minutos de la carretera hacia Vicuña 🌄 Entorno tranquilo, seguro y con excelente conectividad 🛣
+          <span id="puntos3">...</span>
+          <span id="mas-texto3" style="display:none;">
+            <br><br>🔹 Dormitorio Principal con baño en suite, jacuzzi y walking closet
+            <br>🔹 2 baños completos + proyecto para un tercero
+            <br>🔹 Cocina americana
+            <br>🔹 Amplio living y comedor
+            <br>🔹 Hall de entrada
+            <br>🔹 Lavadero y bodega
+            <br>🔹 Quincho pequeño
+            <br><br><strong>✨ Otros detalles:</strong>
+            <br>🔹 Luz y agua potable instalados
+            <br>🔹 Alcantarillado mediante 3 fosas independientes
+            <br>🔹 Camino pavimentado hasta la parcela
+            <br>🔹 Excavación lista para instalación de piscina
+            <br>🔹 Posibilidad de construir hasta 3 casas en el terreno
+            <br><br>✨ Una propiedad ideal para quienes buscan tranquilidad, seguridad y un lugar con proyección.
+          </span>
+          <button onclick="toggleTexto('3')" id="btn-ver-mas3" style="background:none;border:none;color:#0081a8;padding:0;font-family:inherit;font-size:inherit;cursor:pointer;margin-left:5px;font-weight:bold;display:inline-block;">Ver más</button>
+        </p>
+        <div class="card-features">
+          <div class="feat"><span class="feat-icon">🛏</span> 4 hab.</div>
+          <div class="feat"><span class="feat-icon">🚿</span> 2 baños</div>
+          <div class="feat"><span class="feat-icon">📐</span> 5.000 m²</div>
+          <div class="feat"><span class="feat-icon">🌊</span> Proyecto a Piscina</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://wa.me/56983997096?text=Hola!%20Me%20interesa%20la%20casa%20en%20La%20Varilla,%20La%20Serena%20(UF8.740)" class="btn-card" target="_blank">Consultar ahora</a>
+      </div>
+    </div>
+    
+    <!-- PROP 6 -->
+    <div class="card reveal" data-tipo="terreno" style="transition-delay:.2s">
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80&auto=format&fit=crop" alt="Terreno" loading="lazy" />
+        <span class="card-tag" style="background-color:#db7b0c;">Terrenos en proceso de venta</span>
+      </div>
+      <div class="card-body">
+        <div class="card-price"><sup>UF </sup>800</div>
+        <div class="card-title">Terreno plano con factibilidad aprobada</div>
+        <div class="card-location">Vallenar</div>
+        <p class="card-desc">Terreno en sector interior de Vallenar a 15 minutos de la ciudad 🌆 Factibilidad de agua y luz, ideal para proyecto habitacional 🏠</p>
+        <div class="card-features">
+          <div class="feat"><span class="feat-icon">📐</span> 5.000 m²</div>
+          <div class="feat"><span class="feat-icon">🏗</span> Construible</div>
+          <div class="feat"><span class="feat-icon">🌄</span> Interior</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://wa.me/56983997096?text=Hola!%20Me%20interesa%20el%20terreno%20en%20Vallenar%20(UF800)" class="btn-card" target="_blank">Consultar ahora</a>
+      </div>
+    </div>
+
+    <!-- PROP 7 -->
+    <div class="card reveal" data-tipo="casa" style="transition-delay:.3s">
+      <div class="card-img">
+        <div class="gal-hero" id="gal-hero4">
+          <img src="https://i.ibb.co/ycNCRWPW/1.jpg" alt="Casa nueva" loading="lazy" />
+        </div>
+        <span class="card-tag destacada" style="background-color:#4CAF50;">DISPONIBLE</span>
+      </div>
+      <div class="card-body">
+        <div class="card-price"><sup>UF </sup>8.730</div>
+        <div class="card-title">Casa con amplio sector de negocios</div>
+        <div class="card-location">Av. Amunátegui - La Serena</div>
+        <p class="card-desc">
+          Propiedad ubicada en un sector de alta plusvalía y privilegiada zona comercial, frente al Estadio La Portada y con una conectividad inmejorable 🚌 Incluye el pago de letrero publicitario sobre la propiedad. 🏡
+          <span id="puntos4">...</span>
+          <span id="mas-texto4" style="display:none;">
+            <br><br><strong>✨ Ubicación estratégica:</strong>
+            <br>🔹 Casa en pleno centro de La Serena – Av. Amunátegui 📍
+            <br>🔹 A una cuadra de Av. Balmaceda
+            <br>🔹 A tres cuadras del Mall Plaza y Terminal de Buses.
+            <br>🔹 A dos cuadras de hospitales, clínicas, colegios, supermercados y universidades.
+            <br>🔹 Rápido acceso a la carretera norte-sur y a oficinas públicas en general.
+            <br><br><strong>✨ Distribución:</strong>
+            <br>🔹 🏠 Construcción 80 m², Ante jardín y entrada de vehículos.
+            <br>🔹 Living – comedor y cocina americana.
+            <br>🔹 1 Dormitorio en el interior independiente, 1 baño y pequeña sala de estar.
+            <br><br><strong>✨ Valor agregado:</strong> La propiedad cuenta con contrato vigente de un letrero publicitario, que genera aproximadamente 💲3.000.000 al año en ingresos.
+          </span>
+          <button onclick="toggleTexto('4')" id="btn-ver-mas4" style="background:none;border:none;color:#0081a8;padding:0;font-family:inherit;font-size:inherit;cursor:pointer;margin-left:5px;font-weight:bold;display:inline-block;">Ver más</button>
+        </p>
+        <div class="card-features">
+          <div class="feat"><span class="feat-icon">🛏</span> 3 hab.</div>
+          <div class="feat"><span class="feat-icon">🚿</span> 2 baños</div>
+          <div class="feat"><span class="feat-icon">📐</span> 354 m²</div>
+          <div class="feat"><span class="feat-icon">🪧</span> Letrero Publicitario 💸</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://wa.me/56983997096?text=Hola!%20Me%20interesa%20la%20casa%20Av.%20Amunategui,%20La%20Serena%20(UF8.730)" class="btn-card" target="_blank">Consultar ahora</a>
+      </div>
+    </div>
+
+  </div><!-- /props-grid -->
+</section>
+
+<!-- ── LIGHTBOXES ─────────────────────────────── -->
+<!-- LB PROP 1 (hero2) -->
+<div class="lb" id="gal-lb2"><button class="lb-close" id="gal-cl2">&#215;</button><div class="lb-stage"><div class="lb-card" id="gal-card2"><img id="gal-img2" /><div class="lb-count" id="gal-count2"></div></div></div><div class="lb-cap" id="gal-cap2"></div><div class="lb-dots" id="gal-dots2"></div><div class="lb-nav"><button class="lb-btn" id="gal-prv2">&#8592;</button><button class="lb-btn" id="gal-nxt2">&#8594;</button></div></div>
+<!-- LB PROP 2 (hero5) -->
+<div class="lb" id="gal-lb5"><button class="lb-close" id="gal-cl5">&#215;</button><div class="lb-stage"><div class="lb-card" id="gal-card5"><img id="gal-img5" /><div class="lb-count" id="gal-count5"></div></div></div><div class="lb-cap" id="gal-cap5"></div><div class="lb-dots" id="gal-dots5"></div><div class="lb-nav"><button class="lb-btn" id="gal-prv5">&#8592;</button><button class="lb-btn" id="gal-nxt5">&#8594;</button></div></div>
+<!-- LB PROP 3 (hero1) -->
+<div class="lb" id="gal-lb1"><button class="lb-close" id="gal-cl1">&#215;</button><div class="lb-stage"><div class="lb-card" id="gal-card1"><img id="gal-img1" /><div class="lb-count" id="gal-count1"></div></div></div><div class="lb-cap" id="gal-cap1"></div><div class="lb-dots" id="gal-dots1"></div><div class="lb-nav"><button class="lb-btn" id="gal-prv1">&#8592;</button><button class="lb-btn" id="gal-nxt1">&#8594;</button></div></div>
+<!-- LB PROP 4 (hero9) -->
+<div class="lb" id="gal-lb9"><button class="lb-close" id="gal-cl9">&#215;</button><div class="lb-stage"><div class="lb-card" id="gal-card9"><img id="gal-img9" /><div class="lb-count" id="gal-count9"></div></div></div><div class="lb-cap" id="gal-cap9"></div><div class="lb-dots" id="gal-dots9"></div><div class="lb-nav"><button class="lb-btn" id="gal-prv9">&#8592;</button><button class="lb-btn" id="gal-nxt9">&#8594;</button></div></div>
+<!-- LB PROP 5 (hero3) -->
+<div class="lb" id="gal-lb3"><button class="lb-close" id="gal-cl3">&#215;</button><div class="lb-stage"><div class="lb-card" id="gal-card3"><img id="gal-img3" /><div class="lb-count" id="gal-count3"></div></div></div><div class="lb-cap" id="gal-cap3"></div><div class="lb-dots" id="gal-dots3"></div><div class="lb-nav"><button class="lb-btn" id="gal-prv3">&#8592;</button><button class="lb-btn" id="gal-nxt3">&#8594;</button></div></div>
+<!-- LB PROP 7 (hero4) -->
+<div class="lb" id="gal-lb4"><button class="lb-close" id="gal-cl4">&#215;</button><div class="lb-stage"><div class="lb-card" id="gal-card4"><img id="gal-img4" /><div class="lb-count" id="gal-count4"></div></div></div><div class="lb-cap" id="gal-cap4"></div><div class="lb-dots" id="gal-dots4"></div><div class="lb-nav"><button class="lb-btn" id="gal-prv4">&#8592;</button><button class="lb-btn" id="gal-nxt4">&#8594;</button></div></div>
+
+<!-- ── CONTACTO ────────────────────────────────── -->
+<section id="contacto">
+  <div class="reveal">
+    <div class="section-label">Estamos para ayudarte</div>
+    <h2 class="section-title">Contáctanos <em>hoy mismo</em></h2>
+    <div class="divider"></div>
+    <p class="contact-text">Nuestro equipo está disponible para resolver todas tus consultas, coordinar visitas y guiarte en cada paso del proceso. Escríbenos directamente por WhatsApp.</p>
+    <div style="text-align:center">
+      <a href="https://wa.me/56983997096" class="btn-whatsapp" target="_blank">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Contactar por WhatsApp
+      </a>
+    </div>
+  </div>
+  <div class="contact-info reveal" style="transition-delay:.2s">
+    <div class="cinfo"><span class="cinfo-label">Teléfono</span><span class="cinfo-val">+56 9 8399 7096</span></div>
+    <div class="cinfo"><span class="cinfo-label">Ciudad</span><span class="cinfo-val">La Serena, Chile</span></div>
+    <div class="cinfo"><span class="cinfo-label">Horario</span><span class="cinfo-val">Lun–Vie 09:00–18:00</span></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────── -->
+<footer>
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGVrOGhnaTJycW5lZmVuMzQ3ZHBtdDJzeXFxcjQ1eWtubGY2OWU4eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NtGkPF8lvx8S4FUljH/giphy.gif" alt="Logo animado" style="max-width:35%;height:auto;">
+  <div class="footer-brand">Inmobiliaria <span class="footer-gold">Franco Larrañaga®</span></div>
+  <div class="footer-copy">© 2026 · Todos los derechos reservados</div>
+</footer>
+
+<!-- ══════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════ -->
+<script>
+// ── Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 60); });
+
+// ── Mobile menu
+const ham = document.getElementById('hamburger');
+const menu = document.getElementById('mobileMenu');
+ham.addEventListener('click', () => menu.classList.add('open'));
+document.getElementById('mobileClose').addEventListener('click', () => menu.classList.remove('open'));
+function closeMobile() { menu.classList.remove('open'); }
+
+// ── Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// ── Property filter
+function filterProps(tipo, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#propsGrid .card').forEach(card => {
+    card.style.display = (tipo === 'todos' || card.dataset.tipo === tipo) ? 'block' : 'none';
+  });
+}
+
+// ── ✅ FIX: Función unificada "Ver más / Ver menos" para todas las tarjetas
+function toggleTexto(id) {
+  const puntos  = document.getElementById('puntos' + id);
+  const masText = document.getElementById('mas-texto' + id);
+  const boton   = document.getElementById('btn-ver-mas' + id);
+  const expanded = puntos.style.display === 'none';
+  puntos.style.display  = expanded ? 'inline' : 'none';
+  masText.style.display = expanded ? 'none'   : 'inline';
+  boton.textContent     = expanded ? 'Ver más' : 'Ver menos';
+}
+
+// ── Lightbox factory
+function makeLightbox(id, images) {
+  let current = 0;
+  const lb    = document.getElementById('gal-lb'   + id);
+  const card  = document.getElementById('gal-card' + id);
+  const img   = document.getElementById('gal-img'  + id);
+  const cap   = document.getElementById('gal-cap'  + id);
+  const dots  = document.getElementById('gal-dots' + id);
+  const count = document.getElementById('gal-count'+ id);
+
+  function renderDots() {
+    dots.innerHTML = '';
+    images.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'lb-dot' + (i === current ? ' a' : '');
+      d.onclick = () => go(i);
+      dots.appendChild(d);
+    });
+  }
+  function go(i) {
+    current = (i + images.length) % images.length;
+    card.style.transform = 'rotateY(90deg) scale(.9)';
+    setTimeout(() => {
+      img.src = images[current][0];
+      cap.textContent   = images[current][1] || '';
+      count.textContent = (current + 1) + ' / ' + images.length;
+      card.style.transform = '';
+      renderDots();
+    }, 200);
+  }
+  function open()  { lb.classList.add('on'); go(0); document.addEventListener('keydown', onKey); }
+  function close() { lb.classList.remove('on'); document.removeEventListener('keydown', onKey); }
+  function onKey(e) { if (e.key==='ArrowRight') go(current+1); if (e.key==='ArrowLeft') go(current-1); if (e.key==='Escape') close(); }
+
+  document.getElementById('gal-hero' + id).onclick = open;
+  document.getElementById('gal-cl'   + id).onclick = close;
+  document.getElementById('gal-nxt'  + id).onclick = () => go(current + 1);
+  document.getElementById('gal-prv'  + id).onclick = () => go(current - 1);
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  lb.addEventListener('mousemove', e => {
+    const r = lb.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - .5;
+    const y = (e.clientY - r.top)  / r.height - .5;
+    card.style.transform = `rotateY(${x*16}deg) rotateX(${-y*12}deg)`;
+  });
+  lb.addEventListener('mouseleave', () => card.style.transform = '');
+}
+
+// ── Registrar cada galería
+makeLightbox('2', [
+  ['https://i.ibb.co/VY0vX68j/ima1.jpg','Fachada'],
+  ['https://i.ibb.co/HTVPkQpf/ima2.jpg','Living'],
+  ['https://i.ibb.co/jv8SzLkL/ima3.jpg','Living Comedor'],
+  ['https://i.ibb.co/0pCTkfrP/ima4.jpg','Cocina'],
+  ['https://i.ibb.co/695s984/ima5.jpg','Comedor'],
+  ['https://i.ibb.co/gM4mPzn3/ima6.jpg','Pieza'],
+  ['https://i.ibb.co/vCF411T1/ima7.jpg','Baño'],
+  ['https://i.ibb.co/FLqzLjjS/ima8.jpg','Patio'],
+  ['https://i.ibb.co/VcJqxH4v/ima9.jpg','Pasillo'],
+  ['https://i.ibb.co/5h8NxghS/ima10.jpg','Estacionamiento'],
+  ['https://i.ibb.co/DPq3Zwsn/Gemini-Generated-Image-w3nscbw3nscbw3ns.png',''],
+]);
+
+makeLightbox('5', [
+  ['https://i.ibb.co/qF9KZs71/1.jpg','Fachada'],
+  ['https://i.ibb.co/m5yQZDT1/2.jpg','Fachada'],
+  ['https://i.ibb.co/FLZrg1s3/3.jpg','Jardin'],
+  ['https://i.ibb.co/wh6X61n3/4.jpg','Jardin'],
+  ['https://i.ibb.co/wrZnXtCm/5.jpg','Patio'],
+  ['https://i.ibb.co/BKyhKj87/6.jpg','Patio'],
+  ['https://i.ibb.co/Y7MWjJ8L/7.jpg','Patio'],
+  ['https://i.ibb.co/VpWjrfqw/8.jpg','Patio'],
+  ['https://i.ibb.co/6cHpG5BV/9.jpg','Living comedor'],
+  ['https://i.ibb.co/v6X7Ss9H/10.jpg','Living comedor'],
+  ['https://i.ibb.co/VYh1MdM0/11.jpg','Pasillo'],
+  ['https://i.ibb.co/xtnvnHhb/14.jpg','Habitación'],
+  ['https://i.ibb.co/k2gBCbYG/15.jpg','Habitación'],
+  ['https://i.ibb.co/TqpJ6GWm/16.jpg','Habitación'],
+  ['https://i.ibb.co/m57MHG70/17.jpg','Baño'],
+  ['https://i.ibb.co/DPq3Zwsn/Gemini-Generated-Image-w3nscbw3nscbw3ns.png',''],
+]);
+
+makeLightbox('1', [
+  ['https://i.ibb.co/qLdFv2Gp/im-1.jpg','Fachada'],
+  ['https://i.ibb.co/1fvt2G6Y/im8.jpg','Cocina americana'],
+  ['https://i.ibb.co/4n68YxpL/im2.jpg','Piscina'],
+  ['https://i.ibb.co/B2W1wrzD/im5.jpg','Cocina'],
+  ['https://i.ibb.co/DSKFH3w/im4.jpg','Living Comedor'],
+  ['https://i.ibb.co/gF9ktnvt/im3.jpg','Pasillo'],
+  ['https://i.ibb.co/nMvbVzFc/im6.jpg','Habitación principal'],
+  ['https://i.ibb.co/Mkb0QX6X/im9.jpg','Habitación secundaria'],
+  ['https://i.ibb.co/Xf1QtP5k/im12.jpg','Baño'],
+  ['https://i.ibb.co/S4T8ZKBw/im10.jpg','Vista Balcón'],
+  ['https://i.ibb.co/KkKzMTR/im11.jpg','Piscina'],
+  ['https://i.ibb.co/DPq3Zwsn/Gemini-Generated-Image-w3nscbw3nscbw3ns.png',''],
+]);
+
+makeLightbox('9', [
+  ['https://i.ibb.co/LX35mJH5/fachada3.jpg','Fachada'],
+  ['https://i.ibb.co/TDYHrR82/Fachada1.jpg','Fachada'],
+  ['https://i.ibb.co/p6vJVrrb/fachada2.jpg','Fachada'],
+  ['https://i.ibb.co/RktyH1sX/living.jpg','Living'],
+  ['https://i.ibb.co/DDmL3yhD/livingcomedor.jpg','Comedor'],
+  ['https://i.ibb.co/zWznpgFJ/dormitorio.jpg','Dormitorio Principal'],
+  ['https://i.ibb.co/Hp2xpT5V/pieza.jpg','Dormitorio'],
+  ['https://i.ibb.co/mrBp2Qdh/ba-o.jpg','Baño'],
+  ['https://i.ibb.co/0VV3bXPG/cocina.jpg','Cocina'],
+  ['https://i.ibb.co/pv6MrGL0/garage.jpg','Garage'],
+  ['https://i.ibb.co/DPq3Zwsn/Gemini-Generated-Image-w3nscbw3nscbw3ns.png',''],
+]);
+
+makeLightbox('3', [
+  ['https://i.ibb.co/hxvhnj8N/fachada.jpg','Fachada'],
+  ['https://i.ibb.co/DPn9bKmZ/I2.jpg','Living'],
+  ['https://i.ibb.co/1JwdgTYc/I3.jpg','Living'],
+  ['https://i.ibb.co/93HWCntF/I4.jpg','Habitación'],
+  ['https://i.ibb.co/NgNCVTHL/I5.jpg','Baño'],
+  ['https://i.ibb.co/rKTzwfv4/I6.jpg','Living'],
+  ['https://i.ibb.co/xvnw723/I7.jpg','Living comedor'],
+  ['https://i.ibb.co/x8J4ZfMD/I8.jpg','Baño'],
+  ['https://i.ibb.co/PGZ819KH/I9.jpg','Baño principal'],
+  ['https://i.ibb.co/KcYxMzPM/I10.jpg','Cocina'],
+  ['https://i.ibb.co/1Y8zxx0r/I11.jpg','Habitación'],
+  ['https://i.ibb.co/HDjYN2y4/I12.jpg','Habitación'],
+  ['https://i.ibb.co/mrmBGpZr/I13.jpg','Interior'],
+  ['https://i.ibb.co/qLd0JSfh/I14.jpg','Habitación'],
+  ['https://i.ibb.co/V0DYc9NK/I15.jpg','Estacionamiento'],
+  ['https://i.ibb.co/Lhr9YQ4r/colcumpio.jpg','Patio, Terreno.'],
+  ['https://i.ibb.co/DPq3Zwsn/Gemini-Generated-Image-w3nscbw3nscbw3ns.png',''],
+]);
+
+makeLightbox('4', [
+  ['https://i.ibb.co/8496rGC3/11.jpg','Fachada'],
+  ['https://i.ibb.co/1GFTBTGf/55.jpg','Letrero'],
+  ['https://i.ibb.co/cXpW08Fw/111.jpg','Sala de estar'],
+  ['https://i.ibb.co/G4y9xnq3/1222.jpg','Sala de estar'],
+  ['https://i.ibb.co/SXnC58cZ/77.jpg','Living comedor'],
+  ['https://i.ibb.co/sZQZmxV/44.jpg','Dormitorio'],
+  ['https://i.ibb.co/xtPKBkss/66.jpg','Baño'],
+  ['https://i.ibb.co/93Tmmhqn/10.jpg','Patio'],
+  ['https://i.ibb.co/WNVb3S1t/33.jpg','Patio'],
+  ['https://i.ibb.co/d3YZgfb/88.jpg','Patio'],
+  ['https://i.ibb.co/C3rqKT55/99.jpg','Entrada'],
+  ['https://i.ibb.co/S7Gh538y/LOGOALFOMBRA2.png',''],
+]);
+</script>
+</body>
+</html>
